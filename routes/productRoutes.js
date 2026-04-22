@@ -1,30 +1,34 @@
 const express = require("express");
 const router = express.Router();
-const Student = require("../models/Student");
+const Product = require("../models/Product");
 const auth = require("../middleware/authMiddleware");
 
 // CREATE
 router.post("/", auth, async (req, res) => {
-    const student = new Student(req.body);
-    await student.save();
-    res.json(student);
+    const product = new Product(req.body);
+    await product.save();
+    res.json(product);
 });
 
-// READ ALL
+// READ
 router.get("/", auth, async (req, res) => {
-    const students = await Student.find();
-    res.json(students);
+    const products = await Product.find();
+    res.json(products);
 });
 
 // UPDATE
 router.put("/:id", auth, async (req, res) => {
-    const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(student);
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+    );
+    res.json(product);
 });
 
 // DELETE
 router.delete("/:id", auth, async (req, res) => {
-    await Student.findByIdAndDelete(req.params.id);
+    await Product.findByIdAndDelete(req.params.id);
     res.json({ msg: "Deleted" });
 });
 
